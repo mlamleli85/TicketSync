@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support Tickets Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light py-5">
+    <div class="container">
+      <!-- Messages Section -->
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %}
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Support Tickets Dashboard</h2>
+        <a href="{% url 'ticket_submit' %}" class="btn btn-primary"
+          >+ New Support Ticket</a
+        >
+      </div>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+          {% if tickets %}
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-dark">
+                <tr>
+                  <th>Subject</th>
+                  <th>Urgency</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                  <td class="fw-bold">
+                    {{ ticket.title|default:ticket.subject }}
+                  </td>
+                  <td>
+                    <span class="badge bg-secondary"
+                      >{{ ticket.urgency|default:"General" }}</span
+                    >
+                  </td>
+                  <td>
+                    <span class="badge bg-info text-dark"
+                      >{{ ticket.status|default:"Open" }}</span
+                    >
+                  </td>
+                  <td>{{ ticket.created_at|date:"M d, Y" }}</td>
+                  <td class="text-end">
+                    <a
+                      href="{% url 'ticket_delete' ticket.pk %}"
+                      class="btn btn-outline-danger btn-sm"
+                    >
+                      Delete
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="p-4 text-center text-muted">
+            <p class="mb-0">
+              No tickets found. Need help? Click
+              <strong>+ New Support Ticket</strong> to submit one!
+            </p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
