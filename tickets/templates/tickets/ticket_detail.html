@@ -43,16 +43,19 @@
                 <a
                   href="{% url 'ticket_list' %}"
                   class="btn btn-outline-secondary"
-                  >Back to Dashboard</a
-                >
-                <a
-                  href="{% url 'ticket_delete' ticket.pk %}"
-                  class="btn btn-outline-danger"
-                  >Delete Ticket</a
-                >
+                  >Back to Dashboard</a>
+                <div>
+                  <a
+                    href="{% url 'ticket_update' ticket.pk %}"
+                    class="btn btn-outline-primary me-2"
+                    >Edit Ticket</a>
+                  <a
+                    href="{% url 'ticket_delete' ticket.pk %}"
+                    class="btn btn-outline-danger"
+                    >Delete Ticket</a>
+                </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
