@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import SupportTicketForm
-from .models import Ticket
+from .models import SupportTicket
 
 
 def create_ticket_view(request):
@@ -50,10 +50,10 @@ def ticket_list_view(request):
     - Staff/Superusers see all tickets across the system.
     """
     if request.user.is_staff:
-        tickets = Ticket.objects.all().order_by('-created_at')
+        tickets = SupportTicket.objects.all().order_by('-submitted_on')
     else:
-        tickets = Ticket.objects.filter(
-            user=request.user).order_by('-created_at')
+        tickets = SupportTicket.objects.filter(
+            user=request.user).order_by('-submitted_on')
 
     return render(request, 'tickets/ticket_list.html', {'tickets': tickets})
 
@@ -64,9 +64,9 @@ def ticket_delete_view(request, pk):
     Front-end delete view to satisfy CRUD requirement without admin panel.
     """
     if request.user.is_staff:
-        ticket = get_object_or_404(Ticket, pk=pk)
+        ticket = get_object_or_404(SupportTicket, pk=pk)
     else:
-        ticket = get_object_or_404(Ticket, pk=pk, user=request.user)
+        ticket = get_object_or_404(SupportTicket, pk=pk, user=request.user)
 
     if request.method == 'POST':
         ticket.delete()
