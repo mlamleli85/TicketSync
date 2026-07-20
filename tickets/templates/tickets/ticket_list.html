@@ -51,7 +51,14 @@
               <tbody>
                 {% for ticket in tickets %}
                 <tr>
-                  <td class="fw-bold">{{ ticket.issue_subject }}</td>
+                  <td class="fw-bold">
+                    <a
+                      href="{% url 'ticket_detail' ticket.pk %}"
+                      class="text-decoration-none text-dark hover-primary"
+                    >
+                      {{ ticket.issue_subject }}
+                    </a>
+                  </td>
                   <td>
                     <span class="badge bg-secondary"
                       >{{ ticket.urgency_level }}</span

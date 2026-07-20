@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Detail</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light py-4">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card shadow-sm border-0">
+            <div
+              class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+            >
+              <h4 class="mb-0">{{ ticket.issue_subject }}</h4>
+              <span class="badge bg-light text-dark"
+                >{{ ticket.urgency_level }}</span
+              >
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <strong>Submitted By:</strong> {{ ticket.full_name }} ({{ ticket.email_address }})
+              </div>
+              <div class="mb-3">
+                <strong>Submitted On:</strong> {{ ticket.submitted_on|date:"F j, Y, g:i a" }}
+              </div>
+              <hr />
+              <div class="mb-4">
+                <h5>Message:</h5>
+                <p
+                  class="card-text text-secondary"
+                  style="white-space: pre-line"
+                >
+                  {{ ticket.detailed_message }}
+                </p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <a
+                  href="{% url 'ticket_list' %}"
+                  class="btn btn-outline-secondary"
+                  >Back to Dashboard</a
+                >
+                <a
+                  href="{% url 'ticket_delete' ticket.pk %}"
+                  class="btn btn-outline-danger"
+                  >Delete Ticket</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
