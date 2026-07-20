@@ -75,3 +75,18 @@ def ticket_delete_view(request, pk):
 
     return render(request, 'tickets/ticket_confirm_delete.html',
                   {'ticket': ticket})
+
+
+@login_required
+def ticket_detail_view(request, pk):
+    """
+    View a single ticket's full details.
+    - Staff members can view any ticket.
+    - Regular users can only view their own ticket.
+    """
+    if request.user.is_staff:
+        ticket = get_object_or_404(SupportTicket, pk=pk)
+    else:
+        ticket = get_object_or_404(SupportTicket, pk=pk, user=request.user)
+
+    return render(request, 'tickets/ticket_detail.html', {'ticket': ticket})
