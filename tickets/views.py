@@ -90,3 +90,32 @@ def ticket_detail_view(request, pk):
         ticket = get_object_or_404(SupportTicket, pk=pk, user=request.user)
 
     return render(request, 'tickets/ticket_detail.html', {'ticket': ticket})
+
+
+@login_required
+def ticket_update_view(request, pk):
+    """
+    Allows users/staff to edit an existing support ticket.
+    Reuses the existing ticket_form.html template.
+    """
+    if request.user.is_staff:
+        ticket = get_object_or_404(SupportTicket, pk=pk)
+    else:
+        ticket = get_object_or_404(SupportTicket, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        # 'instance=ticket' populates the form with existing data
+        # and handles updates
+        form = SupportTicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ticket updated successfully!')
+            return redirect('ticket_detail', pk=ticket.pk)
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        # Pre-fill form with existing ticket data
+        form = SupportTicketForm(instance=ticket)
+
+    context = {'form': form, 'is_edit': True}
+    return render(request, 'tickets/ticket_form.html', context)
