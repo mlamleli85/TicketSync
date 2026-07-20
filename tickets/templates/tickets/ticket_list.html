@@ -51,12 +51,10 @@
               <tbody>
                 {% for ticket in tickets %}
                 <tr>
-                  <td class="fw-bold">
-                    {{ ticket.title|default:ticket.subject }}
-                  </td>
+                  <td class="fw-bold">{{ ticket.issue_subject }}</td>
                   <td>
                     <span class="badge bg-secondary"
-                      >{{ ticket.urgency|default:"General" }}</span
+                      >{{ ticket.urgency_level }}</span
                     >
                   </td>
                   <td>
@@ -64,7 +62,7 @@
                       >{{ ticket.status|default:"Open" }}</span
                     >
                   </td>
-                  <td>{{ ticket.created_at|date:"M d, Y" }}</td>
+                  <td>{{ ticket.submitted_on|date:"M d, Y" }}</td>
                   <td class="text-end">
                     <a
                       href="{% url 'ticket_delete' ticket.pk %}"
