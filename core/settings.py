@@ -130,3 +130,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+LOGIN_URL = '/admin/login/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
