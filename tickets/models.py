@@ -1,9 +1,10 @@
+from django.conf import settings
 from django.db import models
 
 
 class SupportTicket(models.Model):
     """
-    A custom model tracking user contact and suport requests
+    A custom model tracking user contact and support requests
     """
 
     PRIORITY_CHOICES = [
@@ -11,6 +12,14 @@ class SupportTicket(models.Model):
         ('HIGH', 'Urgent Issue')
     ]
 
+    # Link ticket directly to Django's Auth User model
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='tickets',
+        null=True,
+        blank=True
+    )
     full_name = models.CharField(max_length=150)
     email_address = models.EmailField()
     issue_subject = models.CharField(max_length=200)
