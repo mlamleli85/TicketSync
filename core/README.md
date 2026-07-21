@@ -1,0 +1,69 @@
+**Author:** Mlamleli Ngobese
+**Portfolio Project:** Project Portfolio 4 (Full-Stack Toolkit)
+
+# TicketSync
+
+TicketSync is a full-stack Django issue tracking and support ticketing system deployed on Heroku. The application allows users to create, view, edit, and delete support tickets through an intuitive web interface.
+
+👉 **[Live Deployed Application on Heroku](https://ticketsync-257c307d6ac3.herokuapp.com/)**
+
+---
+
+## Design & User Experience (UX)
+
+### Logic Flowchart
+
+The chart below outlines the user flow, authentication logic, and CRUD action loops designed for TicketSync:
+
+![Support Ticket Dashboard Flowchart](assets/images/flowchart.png)
+
+---
+
+## Features & CRUD Capabilities
+
+The application implements full front-end CRUD (Create, Read, Update, Delete) functionality for managing support tickets:
+
+- **Create:** Users can submit new support tickets via a dedicated front-end form (`/submit/`).
+- **Read:** Users can view the complete list of open/closed tickets (`/`) and click into individual ticket detail pages (`/<id>/`).
+- **Update:** Users can edit existing ticket details or update statuses (`/<id>/edit/`).
+- **Delete:** Users can delete or close support tickets (`/<id>/delete/`).
+
+---
+
+## Manual Testing Summary
+
+| Feature / Action       | Test Procedure                                                     | Expected Outcome                                      | Result   |
+| :--------------------- | :----------------------------------------------------------------- | :---------------------------------------------------- | :------- |
+| **Create Ticket**      | Navigate to `/submit/`, fill out form with valid data, and submit. | Ticket is created; user redirected to list view.      | **Pass** |
+| **Read Ticket List**   | Navigate to root URL (`/`).                                        | List of existing tickets displays clearly.            | **Pass** |
+| **Read Ticket Detail** | Click on an individual ticket from the list.                       | Navigates to `/<id>/` showing full details.           | **Pass** |
+| **Update Ticket**      | Navigate to `/<id>/edit/`, modify fields, and submit.              | Ticket updates in database and reflects on front-end. | **Pass** |
+| **Delete Ticket**      | Click delete on `/<id>/delete/` page.                              | Ticket is permanently removed from list and database. | **Pass** |
+| **Admin Access**       | Access `/admin/` and log in with superuser credentials.            | Grants full administrative dashboard access.          | **Pass** |
+
+---
+
+## Deployment
+
+The project was deployed to Heroku using the following steps:
+
+1. Configured Django settings for production (`ALLOWED_HOSTS`, database configuration via `dj-database-url`).
+2. Configured dynamic static file serving using `WhiteNoise`.
+3. Created a `Procfile` specifying the `gunicorn` web server executable.
+4. Linked the GitHub repository to Heroku and ran database migrations via `heroku run python manage.py migrate`.
+5. Created a superuser via `heroku run python manage.py createsuperuser`.
+
+---
+
+## Tech Stack
+
+- **Backend:** Python, Django
+- **Database:** PostgreSQL (Heroku Postgres)
+- **Web Server:** Gunicorn, WhiteNoise
+- **Deployment Platform:** Heroku
+
+---
+
+## Unfixed Bugs
+
+- No known bugs or open issues remain in the deployed application at the time of submission.
