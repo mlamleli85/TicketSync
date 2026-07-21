@@ -11,6 +11,21 @@ TicketSync is a full-stack Django issue tracking and support ticketing system de
 
 ## Design & User Experience (UX)
 
+## Agile Development & User Stories
+
+This project was developed following Agile methodologies and tracked using a GitHub Projects Kanban board.
+
+👉 **[TicketSync GitHub Project Board](https://github.com/users/mlamleli85/projects/5)**
+
+### Epic: Implementation of the Support Ticket System
+
+User stories were prioritized using MoSCoW categorization (`Must-Have`, `Should-Have`, `Could-Have`) and tracked from backlog to completion:
+
+- **Epic:** Implementation of the Support Ticket System
+- **[Must-Have]** As a user, I can submit a support ticket so that I can get help with my issue
+- **[Should-Have]** As a user, I can see a success confirmation message so that I know my ticket was sent
+- **[Could-Have]** As an admin, I can view submitted tickets in the dashboard so that I can resolve user issues
+
 ### Logic Flowchart
 
 The chart below outlines the user flow, authentication logic, and CRUD action loops designed for TicketSync:
