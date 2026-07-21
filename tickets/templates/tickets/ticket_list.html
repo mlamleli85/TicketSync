@@ -3,58 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Support Tickets Dashboard</title>
+    <title>TicketSync | Support Tickets Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
+    />
+    <!-- Bootstrap Icons for refined visual details -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
   </head>
   <body class="bg-light py-5">
     <div class="container">
       <!-- Messages Section -->
-      {% if messages %} {% for message in messages %}
-      <div
-        class="alert alert-{{ message.tags }} alert-dismissible fade show"
-        role="alert"
-      >
-        {{ message }}
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>
-      </div>
-      {% endfor %} {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          <div
+            class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm"
+            role="alert"
+          >
+            {{ message }}
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+        {% endfor %}
+      {% endif %}
 
-      <div class="d-flex justify-content-between align-items-center mb-4">
+      <!-- Header Section -->
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
         <div>
           <h1 class="h2 fw-bold text-primary mb-1">TicketSync</h1>
-          <h2 class="h5 text-muted mb-0">Support Tickets Dashboard</h2>
+          <p class="text-muted mb-0 small">Support Tickets Dashboard</p>
         </div>
-        <a href="{% url 'ticket_submit' %}" class="btn btn-primary">
-          + New Support Ticket
+        <a href="{% url 'ticket_submit' %}" class="btn btn-primary shadow-sm px-3 fw-semibold">
+          <i class="bi bi-plus-lg me-1"></i> New Support Ticket
         </a>
       </div>
 
-      <div class="card shadow-sm border-0">
+      <!-- Dashboard Table Card -->
+      <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
         <div class="card-body p-0">
           {% if tickets %}
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
-              <thead class="table-dark">
+              <thead class="table-dark bg-dark">
                 <tr>
-                  <th>Subject</th>
-                  <th>Urgency</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th class="text-end">Actions</th>
+                  <th class="py-3 ps-4">Subject</th>
+                  <th class="py-3">Urgency</th>
+                  <th class="py-3">Status</th>
+                  <th class="py-3">Created</th>
+                  <th class="py-3 pe-4 text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {% for ticket in tickets %}
                 <tr>
-                  <td class="fw-bold">
+                  <td class="ps-4 fw-semibold">
                     <a
                       href="{% url 'ticket_detail' ticket.pk %}"
                       class="text-decoration-none text-dark hover-primary"
@@ -63,22 +73,24 @@
                     </a>
                   </td>
                   <td>
-                    <span class="badge bg-secondary"
-                      >{{ ticket.urgency_level }}</span
-                    >
+                    <span class="badge bg-secondary text-uppercase px-2 py-1 fs-7">
+                      {{ ticket.urgency_level }}
+                    </span>
                   </td>
                   <td>
-                    <span class="badge bg-info text-dark"
-                      >{{ ticket.status|default:"Open" }}</span
-                    >
+                    <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle px-2 py-1">
+                      {{ ticket.status|default:"Open" }}
+                    </span>
                   </td>
-                  <td>{{ ticket.submitted_on|date:"M d, Y" }}</td>
-                  <td class="text-end">
+                  <td class="text-muted small">
+                    {{ ticket.submitted_on|date:"M d, Y" }}
+                  </td>
+                  <td class="pe-4 text-end">
                     <a
                       href="{% url 'ticket_delete' ticket.pk %}"
-                      class="btn btn-outline-danger btn-sm"
+                      class="btn btn-outline-danger btn-sm px-3"
                     >
-                      Delete
+                      <i class="bi bi-trash me-1"></i> Delete
                     </a>
                   </td>
                 </tr>
@@ -87,10 +99,11 @@
             </table>
           </div>
           {% else %}
-          <div class="p-4 text-center text-muted">
+          <div class="p-5 text-center text-muted">
+            <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary opacity-50"></i>
             <p class="mb-0">
               No tickets found. Need help? Click
-              <strong>+ New Support Ticket</strong> to submit one!
+              <strong class="text-primary">+ New Support Ticket</strong> to submit one!
             </p>
           </div>
           {% endif %}
@@ -98,6 +111,7 @@
       </div>
     </div>
 
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
