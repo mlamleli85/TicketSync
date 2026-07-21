@@ -1,0 +1,11 @@
+# Django local database & environment
+db.sqlite3
+*.sqlite3
+.env
+venv/
+*.pyc
+__pycache__/
+
+# OS System Files
+.DS_Store
+Thumbs.db
