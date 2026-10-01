@@ -48,24 +48,24 @@ The flowchart below was created during planning. It outlines the user flow, the 
 
 ### Site structure
 
-| Page | URL | Who can access it |
-| :--- | :--- | :--- |
-| Home | `/` | Everyone |
-| Register | `/accounts/signup/` | Visitors who are not logged in |
-| Log in | `/accounts/login/` | Visitors who are not logged in |
-| My Tickets (dashboard) | `/tickets/` | Logged-in users |
-| New ticket | `/tickets/new/` | Logged-in users |
-| Ticket detail and replies | `/tickets/<id>/` | Ticket owner and staff |
-| Edit ticket | `/tickets/<id>/edit/` | Ticket owner (while active) and staff |
-| Delete ticket | `/tickets/<id>/delete/` | Ticket owner and staff |
-| Admin panel | `/admin/` | Superusers only |
+| Page                      | URL                     | Who can access it                     |
+| :------------------------ | :---------------------- | :------------------------------------ |
+| Home                      | `/`                     | Everyone                              |
+| Register                  | `/accounts/signup/`     | Visitors who are not logged in        |
+| Log in                    | `/accounts/login/`      | Visitors who are not logged in        |
+| My Tickets (dashboard)    | `/tickets/`             | Logged-in users                       |
+| New ticket                | `/tickets/new/`         | Logged-in users                       |
+| Ticket detail and replies | `/tickets/<id>/`        | Ticket owner and staff                |
+| Edit ticket               | `/tickets/<id>/edit/`   | Ticket owner (while active) and staff |
+| Delete ticket             | `/tickets/<id>/delete/` | Ticket owner and staff                |
+| Admin panel               | `/admin/`               | Superusers only                       |
 
 ### Navigation
 
 Every page shares one base template (`templates/base.html`) with a responsive navigation bar. It collapses into a menu on small screens. The bar always shows:
 
 - links to **Home**, **My Tickets** and **New Ticket** (the ticket links only appear once logged in);
-- the user's **login status** ("Logged in as *username*", with a **Staff** badge for support staff) or "Not logged in";
+- the user's **login status** ("Logged in as _username_", with a **Staff** badge for support staff) or "Not logged in";
 - **Log in** and **Register** buttons, or a **Log out** button.
 
 Breadcrumbs on the ticket pages show where the user is and link back to the dashboard.
@@ -98,12 +98,12 @@ The project was planned and tracked with the **[TicketSync GitHub Project board]
 - Each story has **story points** (relative effort). Of the 48 points in total, must-haves are 33 points (69%), should-haves 11 points (23%) and could-haves 4 points (8%), so should-have stories stay well under 60% of the total.
 - Stories are grouped into **milestones**, one per sprint:
 
-| Sprint (milestone) | Goal | Stories |
-| :--- | :--- | :--- |
-| Sprint 1: Foundations | Project set-up, data model, admin | US01, US02 |
-| Sprint 2: Ticket CRUD | Create, read, update and delete tickets with feedback messages | US03 – US07 |
-| Sprint 3: Accounts and permissions | Registration, login/logout, login status, access control | US08 – US11 |
-| Sprint 4: Collaboration and quality | Replies, status workflow, search, testing and documentation | US12 – US16 |
+| Sprint (milestone)                  | Goal                                                           | Stories     |
+| :---------------------------------- | :------------------------------------------------------------- | :---------- |
+| Sprint 1: Foundations               | Project set-up, data model, admin                              | US01, US02  |
+| Sprint 2: Ticket CRUD               | Create, read, update and delete tickets with feedback messages | US03 – US07 |
+| Sprint 3: Accounts and permissions  | Registration, login/logout, login status, access control       | US08 – US11 |
+| Sprint 4: Collaboration and quality | Replies, status workflow, search, testing and documentation    | US12 – US16 |
 
 ---
 
@@ -149,7 +149,7 @@ The project was planned and tracked with the **[TicketSync GitHub Project board]
 
 **US10 (must-have, 2 points):** As a **user**, I can **see whether I am logged in** so that **I know which account I am using**.
 
-- Acceptance criteria: the navigation bar shows "Logged in as *username*" or "Not logged in" on every page.
+- Acceptance criteria: the navigation bar shows "Logged in as _username_" or "Not logged in" on every page.
 
 **US11 (must-have, 3 points):** As a **user**, I can **only see and change my own tickets** so that **my information stays private**.
 
@@ -266,17 +266,17 @@ erDiagram
 
 ### SupportTicket
 
-| Field | Type | Notes |
-| :--- | :--- | :--- |
-| `user` | ForeignKey → User | The ticket's owner. Deleting the user deletes their tickets. |
-| `full_name` | CharField(150) | Validated to letters and common name punctuation |
-| `email_address` | EmailField | Pre-filled from the account |
-| `issue_subject` | CharField(200) | At least 5 characters |
-| `detailed_message` | TextField | At least 20 characters |
-| `urgency_level` | CharField, choices | `LOW` (General Inquiry) or `HIGH` (Urgent Issue) |
-| `status` | CharField, choices | `OPEN` (default), `IN_PROGRESS`, `RESOLVED`, `CLOSED` |
-| `submitted_on` | DateTimeField | Set automatically on creation |
-| `updated_on` | DateTimeField | Updated automatically on every save |
+| Field              | Type               | Notes                                                        |
+| :----------------- | :----------------- | :----------------------------------------------------------- |
+| `user`             | ForeignKey → User  | The ticket's owner. Deleting the user deletes their tickets. |
+| `full_name`        | CharField(150)     | Validated to letters and common name punctuation             |
+| `email_address`    | EmailField         | Pre-filled from the account                                  |
+| `issue_subject`    | CharField(200)     | At least 5 characters                                        |
+| `detailed_message` | TextField          | At least 20 characters                                       |
+| `urgency_level`    | CharField, choices | `LOW` (General Inquiry) or `HIGH` (Urgent Issue)             |
+| `status`           | CharField, choices | `OPEN` (default), `IN_PROGRESS`, `RESOLVED`, `CLOSED`        |
+| `submitted_on`     | DateTimeField      | Set automatically on creation                                |
+| `updated_on`       | DateTimeField      | Updated automatically on every save                          |
 
 The business rules live on the model, so every view applies them the same way:
 
@@ -286,12 +286,12 @@ The business rules live on the model, so every view applies them the same way:
 
 ### TicketComment
 
-| Field | Type | Notes |
-| :--- | :--- | :--- |
-| `ticket` | ForeignKey → SupportTicket | Deleting a ticket deletes its replies |
-| `author` | ForeignKey → User | Owner or staff member who wrote the reply |
-| `body` | TextField | Empty replies are rejected |
-| `created_on` | DateTimeField | Replies are shown oldest first |
+| Field        | Type                       | Notes                                     |
+| :----------- | :------------------------- | :---------------------------------------- |
+| `ticket`     | ForeignKey → SupportTicket | Deleting a ticket deletes its replies     |
+| `author`     | ForeignKey → User          | Owner or staff member who wrote the reply |
+| `body`       | TextField                  | Empty replies are rejected                |
+| `created_on` | DateTimeField              | Replies are shown oldest first            |
 
 ---
 
@@ -312,13 +312,13 @@ The business rules live on the model, so every view applies them the same way:
 
 Automated tests are written with Django's `TestCase` in `tickets/tests.py`. They cover:
 
-| Area | What is tested |
-| :--- | :--- |
-| Models | String output, default status, permission helpers, reply status rules, "needs attention" flag, cascade delete of replies |
-| Forms | Required fields, subject/message length, name characters, email format, duplicate active tickets, staff-only status field, duplicate email on registration |
-| Authentication | Public home page, login status display, registration, login with valid and invalid details, POST-only logout, redirect of logged-out users from every ticket page |
-| CRUD views | Create (and pre-filled form), list filtered per user, staff sees all, search and status filter, detail access control, pre-filled update form, update, staff status change, blocked edit of resolved tickets, delete confirmation and delete, blocked access to other users' tickets |
-| Replies | Owner reply, staff reply changes status, no replies on closed tickets, empty reply rejected |
+| Area           | What is tested                                                                                                                                                                                                                                                                       |
+| :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Models         | String output, default status, permission helpers, reply status rules, "needs attention" flag, cascade delete of replies                                                                                                                                                             |
+| Forms          | Required fields, subject/message length, name characters, email format, duplicate active tickets, staff-only status field, duplicate email on registration                                                                                                                           |
+| Authentication | Public home page, login status display, registration, login with valid and invalid details, POST-only logout, redirect of logged-out users from every ticket page                                                                                                                    |
+| CRUD views     | Create (and pre-filled form), list filtered per user, staff sees all, search and status filter, detail access control, pre-filled update form, update, staff status change, blocked edit of resolved tickets, delete confirmation and delete, blocked access to other users' tickets |
+| Replies        | Owner reply, staff reply changes status, no replies on closed tickets, empty reply rejected                                                                                                                                                                                          |
 
 To run the Python tests locally:
 
@@ -326,17 +326,17 @@ To run the Python tests locally:
 python manage.py test
 ```
 
-Result: **TO TEST** (record the number of tests and "OK" here after running them).
+Result: **Ran 48 tests – OK** (all passing)
 
 ### Automated JavaScript tests
 
 The JavaScript in `static/js/script.js` is tested with [Jest](https://jestjs.io/) and jsdom in `js_tests/script.test.js`. The functions take the page (and, for alerts, the close function) as arguments so they can be tested without a browser.
 
-| Function | What is tested |
-| :--- | :--- |
-| `getCounterState` | Characters still needed, spaces ignored, message once the minimum is reached, empty input |
-| `setUpCharacterCounter` | Counter shows on page load in red, updates while typing and turns back to normal, does nothing on pages without a description box |
-| `autoDismissSuccessAlerts` | Success and info messages close after five seconds; error messages are never closed |
+| Function                   | What is tested                                                                                                                    |
+| :------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| `getCounterState`          | Characters still needed, spaces ignored, message once the minimum is reached, empty input                                         |
+| `setUpCharacterCounter`    | Counter shows on page load in red, updates while typing and turns back to normal, does nothing on pages without a description box |
+| `autoDismissSuccessAlerts` | Success and info messages close after five seconds; error messages are never closed                                               |
 
 To run the JavaScript tests (requires Node.js):
 
@@ -353,59 +353,59 @@ Result: **TO TEST** (record the number of tests passed here after running them).
 
 Each test below was carried out on the deployed site.
 
-| # | Feature | Steps | Expected result | Result |
-| :- | :--- | :--- | :--- | :--- |
-| 1 | Home page (logged out) | Open `/` in a private window | Purpose of the site, "Not logged in" and Register/Log in buttons are shown | TO TEST |
-| 2 | Registration | Click Register, fill in a new username, email and matching passwords | Account is created, user is logged in, success message, dashboard opens | TO TEST |
-| 3 | Registration validation | Register with an email that is already used, or passwords that don't match | Form shows the error next to the field; no account is created | TO TEST |
-| 4 | Login status | Log in | Navbar shows "Logged in as *username*" on every page | TO TEST |
-| 5 | Login with wrong password | Enter a wrong password | "Login failed" message; user stays logged out | TO TEST |
-| 6 | Logout | Click Log out | User is logged out, "You have been logged out" message, home page opens | TO TEST |
-| 7 | Protected pages | While logged out, type `/tickets/`, `/tickets/new/` and `/tickets/1/edit/` in the address bar | Each redirects to the login page | TO TEST |
-| 8 | Create ticket | Click New Ticket, fill in valid details, submit | Ticket detail page opens with "submitted successfully" message | TO TEST |
-| 9 | Create ticket validation | Submit with a 2-letter subject, a short description, or numbers in the name | The ticket isn't saved; each problem is shown under its field | TO TEST |
-| 10 | Character counter | Type in the description box | Counter shows how many more characters are needed, then the total | TO TEST |
-| 11 | Duplicate ticket | Submit a second ticket with the same subject as an open one | Error under the subject; not saved | TO TEST |
-| 12 | Dashboard | Open My Tickets | Only my tickets are listed with correct status counts | TO TEST |
-| 13 | Search and filter | Search for a word in a subject; filter by a status | Only matching tickets are shown; "Clear filters" resets the list | TO TEST |
-| 14 | Ticket detail | Click a ticket's subject | All details, badges and replies are shown | TO TEST |
-| 15 | Update ticket | Click Edit | Form opens pre-filled; after saving, changes show with "Ticket updated successfully!" | TO TEST |
-| 16 | Edit blocked when resolved | As staff, set a ticket to Resolved; as its owner, try to edit it | Edit button is hidden; typing the edit URL redirects back with an error message | TO TEST |
-| 17 | Delete ticket | Click Delete, then Cancel; then Delete and confirm | Cancel keeps the ticket; confirming removes it with "Ticket deleted successfully." | TO TEST |
-| 18 | Other users' tickets | Log in as a second user and type the URL of the first user's ticket (view, edit and delete) | "Page not found" for each | TO TEST |
-| 19 | Replies | Add a reply as the owner | Reply appears with a success message | TO TEST |
-| 20 | Staff reply | As staff, reply to an Open ticket | Reply has a "Support team" badge; status changes to In Progress | TO TEST |
-| 21 | Reopen | As staff, set a ticket to Resolved; as owner, reply | Status changes back to Open | TO TEST |
-| 22 | Closed ticket | As staff, set a ticket to Closed | Reply form is replaced by "closed to new replies" | TO TEST |
-| 23 | Staff dashboard | Log in as staff | All tickets are listed with a "Raised by" column and a Staff badge in the navbar | TO TEST |
-| 24 | Needs attention | Create a High urgency ticket and leave it Open for over a day | Row is highlighted with a "Needs attention" badge | TO TEST |
-| 25 | Messages auto-close | Perform any successful action | Success message closes after about five seconds | TO TEST |
-| 26 | 404 page | Open `/does-not-exist/` | Custom "Page not found" page with a link home | TO TEST |
-| 27 | Responsiveness | Check every page with Chrome DevTools at 375px, 768px and 1280px | Layout adapts, navbar collapses, nothing overflows the screen | TO TEST |
-| 28 | Browsers | Open the site in Chrome, Firefox and Safari/Edge | Site looks and works the same | TO TEST |
+| #   | Feature                    | Steps                                                                                         | Expected result                                                                       | Result  |
+| :-- | :------------------------- | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------ | :------ |
+| 1   | Home page (logged out)     | Open `/` in a private window                                                                  | Purpose of the site, "Not logged in" and Register/Log in buttons are shown            | TO TEST |
+| 2   | Registration               | Click Register, fill in a new username, email and matching passwords                          | Account is created, user is logged in, success message, dashboard opens               | TO TEST |
+| 3   | Registration validation    | Register with an email that is already used, or passwords that don't match                    | Form shows the error next to the field; no account is created                         | TO TEST |
+| 4   | Login status               | Log in                                                                                        | Navbar shows "Logged in as _username_" on every page                                  | TO TEST |
+| 5   | Login with wrong password  | Enter a wrong password                                                                        | "Login failed" message; user stays logged out                                         | TO TEST |
+| 6   | Logout                     | Click Log out                                                                                 | User is logged out, "You have been logged out" message, home page opens               | TO TEST |
+| 7   | Protected pages            | While logged out, type `/tickets/`, `/tickets/new/` and `/tickets/1/edit/` in the address bar | Each redirects to the login page                                                      | TO TEST |
+| 8   | Create ticket              | Click New Ticket, fill in valid details, submit                                               | Ticket detail page opens with "submitted successfully" message                        | TO TEST |
+| 9   | Create ticket validation   | Submit with a 2-letter subject, a short description, or numbers in the name                   | The ticket isn't saved; each problem is shown under its field                         | TO TEST |
+| 10  | Character counter          | Type in the description box                                                                   | Counter shows how many more characters are needed, then the total                     | TO TEST |
+| 11  | Duplicate ticket           | Submit a second ticket with the same subject as an open one                                   | Error under the subject; not saved                                                    | TO TEST |
+| 12  | Dashboard                  | Open My Tickets                                                                               | Only my tickets are listed with correct status counts                                 | TO TEST |
+| 13  | Search and filter          | Search for a word in a subject; filter by a status                                            | Only matching tickets are shown; "Clear filters" resets the list                      | TO TEST |
+| 14  | Ticket detail              | Click a ticket's subject                                                                      | All details, badges and replies are shown                                             | TO TEST |
+| 15  | Update ticket              | Click Edit                                                                                    | Form opens pre-filled; after saving, changes show with "Ticket updated successfully!" | TO TEST |
+| 16  | Edit blocked when resolved | As staff, set a ticket to Resolved; as its owner, try to edit it                              | Edit button is hidden; typing the edit URL redirects back with an error message       | TO TEST |
+| 17  | Delete ticket              | Click Delete, then Cancel; then Delete and confirm                                            | Cancel keeps the ticket; confirming removes it with "Ticket deleted successfully."    | TO TEST |
+| 18  | Other users' tickets       | Log in as a second user and type the URL of the first user's ticket (view, edit and delete)   | "Page not found" for each                                                             | TO TEST |
+| 19  | Replies                    | Add a reply as the owner                                                                      | Reply appears with a success message                                                  | TO TEST |
+| 20  | Staff reply                | As staff, reply to an Open ticket                                                             | Reply has a "Support team" badge; status changes to In Progress                       | TO TEST |
+| 21  | Reopen                     | As staff, set a ticket to Resolved; as owner, reply                                           | Status changes back to Open                                                           | TO TEST |
+| 22  | Closed ticket              | As staff, set a ticket to Closed                                                              | Reply form is replaced by "closed to new replies"                                     | TO TEST |
+| 23  | Staff dashboard            | Log in as staff                                                                               | All tickets are listed with a "Raised by" column and a Staff badge in the navbar      | TO TEST |
+| 24  | Needs attention            | Create a High urgency ticket and leave it Open for over a day                                 | Row is highlighted with a "Needs attention" badge                                     | TO TEST |
+| 25  | Messages auto-close        | Perform any successful action                                                                 | Success message closes after about five seconds                                       | TO TEST |
+| 26  | 404 page                   | Open `/does-not-exist/`                                                                       | Custom "Page not found" page with a link home                                         | TO TEST |
+| 27  | Responsiveness             | Check every page with Chrome DevTools at 375px, 768px and 1280px                              | Layout adapts, navbar collapses, nothing overflows the screen                         | TO TEST |
+| 28  | Browsers                   | Open the site in Chrome, Firefox and Safari/Edge                                              | Site looks and works the same                                                         | TO TEST |
 
 ### Manual JavaScript testing
 
-| # | Feature | Steps | Expected result | Result |
-| :- | :--- | :--- | :--- | :--- |
-| JS1 | Character counter on load | Open New ticket | "0 characters - 20 more needed" in red under the description | TO TEST |
-| JS2 | Character counter while typing | Type 20 or more characters | Counter shows the total and is no longer red | TO TEST |
-| JS3 | Counter on edit | Open Edit on an existing ticket | Counter shows the current description length straight away | TO TEST |
-| JS4 | Success message auto-close | Save a ticket | Green message fades out after about five seconds | TO TEST |
-| JS5 | Error message stays | Submit an invalid form | Red message stays until closed with the X button | TO TEST |
-| JS6 | Mobile menu | At 375px width, tap the menu button | Navigation opens and closes | TO TEST |
-| JS7 | Console | Open DevTools → Console on every page | No errors | TO TEST |
+| #   | Feature                        | Steps                                 | Expected result                                              | Result  |
+| :-- | :----------------------------- | :------------------------------------ | :----------------------------------------------------------- | :------ |
+| JS1 | Character counter on load      | Open New ticket                       | "0 characters - 20 more needed" in red under the description | TO TEST |
+| JS2 | Character counter while typing | Type 20 or more characters            | Counter shows the total and is no longer red                 | TO TEST |
+| JS3 | Counter on edit                | Open Edit on an existing ticket       | Counter shows the current description length straight away   | TO TEST |
+| JS4 | Success message auto-close     | Save a ticket                         | Green message fades out after about five seconds             | TO TEST |
+| JS5 | Error message stays            | Submit an invalid form                | Red message stays until closed with the X button             | TO TEST |
+| JS6 | Mobile menu                    | At 375px width, tap the menu button   | Navigation opens and closes                                  | TO TEST |
+| JS7 | Console                        | Open DevTools → Console on every page | No errors                                                    | TO TEST |
 
 ### Validation
 
-| Tool | Files | Result |
-| :--- | :--- | :--- |
-| [W3C HTML Validator](https://validator.w3.org/) (by URL / page source of the deployed pages) | Home, Register, Log in, My Tickets, New ticket, Ticket detail, Edit, Delete | TO TEST |
-| [W3C CSS Validator (Jigsaw)](https://jigsaw.w3.org/css-validator/) | `static/css/style.css` | TO TEST |
-| [JSHint](https://jshint.com/) | `static/js/script.js` | TO TEST |
-| [Code Institute Python Linter](https://pep8ci.herokuapp.com/) | `tickets/models.py`, `views.py`, `forms.py`, `urls.py`, `admin.py`, `tests.py`, `core/settings.py` | TO TEST |
-| Lighthouse (Chrome DevTools), including Accessibility score | Home and My Tickets pages | TO TEST |
-| [WAVE accessibility checker](https://wave.webaim.org/) | Home, New ticket and Ticket detail pages | TO TEST |
+| Tool                                                                                         | Files                                                                                              | Result  |
+| :------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------- | :------ |
+| [W3C HTML Validator](https://validator.w3.org/) (by URL / page source of the deployed pages) | Home, Register, Log in, My Tickets, New ticket, Ticket detail, Edit, Delete                        | TO TEST |
+| [W3C CSS Validator (Jigsaw)](https://jigsaw.w3.org/css-validator/)                           | `static/css/style.css`                                                                             | TO TEST |
+| [JSHint](https://jshint.com/)                                                                | `static/js/script.js`                                                                              | TO TEST |
+| [Code Institute Python Linter](https://pep8ci.herokuapp.com/)                                | `tickets/models.py`, `views.py`, `forms.py`, `urls.py`, `admin.py`, `tests.py`, `core/settings.py` | TO TEST |
+| Lighthouse (Chrome DevTools), including Accessibility score                                  | Home and My Tickets pages                                                                          | TO TEST |
+| [WAVE accessibility checker](https://wave.webaim.org/)                                       | Home, New ticket and Ticket detail pages                                                           | TO TEST |
 
 ---
 
@@ -413,16 +413,16 @@ Each test below was carried out on the deployed site.
 
 ### Solved bugs
 
-| Bug | Cause | Fix |
-| :--- | :--- | :--- |
-| Secret key visible in the repository | `.env` was committed before it was added to `.gitignore` | Removed `.env` from the whole git history, generated a new `SECRET_KEY` and stored it only in Heroku Config Vars and a local untracked `.env` |
-| Description box and urgency dropdown displayed as single-line text inputs, so tickets often failed to save | The form template drew every field as `<input type="{{ field.widget_type }}">` | Render each field with Django's own widget (`{{ field }}`), styled through a shared Bootstrap mixin in `forms.py` |
-| Users were sent to the Django admin to log in, and could not register | `LOGIN_URL` pointed to `/admin/login/` and there were no front-end auth pages | Added front-end registration, login and logout pages and set `LOGIN_URL = 'login'` |
-| Tickets created while logged out disappeared from the dashboard | Ticket creation did not require login, so the ticket had no owner | Ticket creation now requires login and always links the ticket to the user |
-| Ticket detail page failed HTML validation | A missing closing `</div>` | Rebuilt all templates on a shared `base.html` |
-| Local development failed with SSL errors on SQLite | `ssl_require=True` was applied to every database | SSL is only required when `DATABASE_URL` (Heroku Postgres) is set |
-| WhiteNoise compression setting was ignored | `STATICFILES_STORAGE` was removed in Django 5.1 | Replaced with the `STORAGES` setting |
-| Static files 404 in production | Heroku doesn't serve static files by itself | Added WhiteNoise middleware |
+| Bug                                                                                                        | Cause                                                                          | Fix                                                                                                                                           |
+| :--------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| Secret key visible in the repository                                                                       | `.env` was committed before it was added to `.gitignore`                       | Removed `.env` from the whole git history, generated a new `SECRET_KEY` and stored it only in Heroku Config Vars and a local untracked `.env` |
+| Description box and urgency dropdown displayed as single-line text inputs, so tickets often failed to save | The form template drew every field as `<input type="{{ field.widget_type }}">` | Render each field with Django's own widget (`{{ field }}`), styled through a shared Bootstrap mixin in `forms.py`                             |
+| Users were sent to the Django admin to log in, and could not register                                      | `LOGIN_URL` pointed to `/admin/login/` and there were no front-end auth pages  | Added front-end registration, login and logout pages and set `LOGIN_URL = 'login'`                                                            |
+| Tickets created while logged out disappeared from the dashboard                                            | Ticket creation did not require login, so the ticket had no owner              | Ticket creation now requires login and always links the ticket to the user                                                                    |
+| Ticket detail page failed HTML validation                                                                  | A missing closing `</div>`                                                     | Rebuilt all templates on a shared `base.html`                                                                                                 |
+| Local development failed with SSL errors on SQLite                                                         | `ssl_require=True` was applied to every database                               | SSL is only required when `DATABASE_URL` (Heroku Postgres) is set                                                                             |
+| WhiteNoise compression setting was ignored                                                                 | `STATICFILES_STORAGE` was removed in Django 5.1                                | Replaced with the `STORAGES` setting                                                                                                          |
+| Static files 404 in production                                                                             | Heroku doesn't serve static files by itself                                    | Added WhiteNoise middleware                                                                                                                   |
 
 ### Unfixed bugs
 
@@ -474,12 +474,13 @@ No known bugs remain at the time of submission.
 3. In the app's **Resources** tab, add the **Heroku Postgres** add-on. This creates the `DATABASE_URL` Config Var automatically.
 4. In **Settings → Reveal Config Vars**, add:
 
-   | Key | Value |
-   | :--- | :--- |
-   | `SECRET_KEY` | a new random secret key (never the one used locally) |
-   | `DATABASE_URL` | added automatically by Heroku Postgres |
+   | Key            | Value                                                |
+   | :------------- | :--------------------------------------------------- |
+   | `SECRET_KEY`   | a new random secret key (never the one used locally) |
+   | `DATABASE_URL` | added automatically by Heroku Postgres               |
 
    Do not add `DEBUG`, so it stays `False` in production.
+
 5. In the **Deploy** tab, choose **GitHub** as the deployment method, search for the `TicketSync` repository and click **Connect**.
 6. Click **Deploy Branch** (branch `main`), or enable **Automatic Deploys**. Heroku installs the requirements, runs `collectstatic` and then the release phase migrations.
 7. Create an admin account on the live database from **More → Run console**:
