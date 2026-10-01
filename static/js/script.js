@@ -1,3 +1,5 @@
+/* jshint esversion: 11 */
+/* globals bootstrap, module */
 /* TicketSync front-end behaviour */
 
 const SUCCESS_ALERT_DELAY_MS = 5000;
