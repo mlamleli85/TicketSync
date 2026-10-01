@@ -345,7 +345,7 @@ npm install
 npm test
 ```
 
-Result: **TO TEST** (record the number of tests passed here after running them).
+Result: **9 tests passed** (Jest).
 
 `package.json` is only used for these tests. Jest is a development dependency and is not part of the deployed app.
 
@@ -353,59 +353,59 @@ Result: **TO TEST** (record the number of tests passed here after running them).
 
 Each test below was carried out on the deployed site.
 
-| #   | Feature                    | Steps                                                                                         | Expected result                                                                       | Result  |
-| :-- | :------------------------- | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------ | :------ |
-| 1   | Home page (logged out)     | Open `/` in a private window                                                                  | Purpose of the site, "Not logged in" and Register/Log in buttons are shown            | TO TEST |
-| 2   | Registration               | Click Register, fill in a new username, email and matching passwords                          | Account is created, user is logged in, success message, dashboard opens               | TO TEST |
-| 3   | Registration validation    | Register with an email that is already used, or passwords that don't match                    | Form shows the error next to the field; no account is created                         | TO TEST |
-| 4   | Login status               | Log in                                                                                        | Navbar shows "Logged in as _username_" on every page                                  | TO TEST |
-| 5   | Login with wrong password  | Enter a wrong password                                                                        | "Login failed" message; user stays logged out                                         | TO TEST |
-| 6   | Logout                     | Click Log out                                                                                 | User is logged out, "You have been logged out" message, home page opens               | TO TEST |
-| 7   | Protected pages            | While logged out, type `/tickets/`, `/tickets/new/` and `/tickets/1/edit/` in the address bar | Each redirects to the login page                                                      | TO TEST |
-| 8   | Create ticket              | Click New Ticket, fill in valid details, submit                                               | Ticket detail page opens with "submitted successfully" message                        | TO TEST |
-| 9   | Create ticket validation   | Submit with a 2-letter subject, a short description, or numbers in the name                   | The ticket isn't saved; each problem is shown under its field                         | TO TEST |
-| 10  | Character counter          | Type in the description box                                                                   | Counter shows how many more characters are needed, then the total                     | TO TEST |
-| 11  | Duplicate ticket           | Submit a second ticket with the same subject as an open one                                   | Error under the subject; not saved                                                    | TO TEST |
-| 12  | Dashboard                  | Open My Tickets                                                                               | Only my tickets are listed with correct status counts                                 | TO TEST |
-| 13  | Search and filter          | Search for a word in a subject; filter by a status                                            | Only matching tickets are shown; "Clear filters" resets the list                      | TO TEST |
-| 14  | Ticket detail              | Click a ticket's subject                                                                      | All details, badges and replies are shown                                             | TO TEST |
-| 15  | Update ticket              | Click Edit                                                                                    | Form opens pre-filled; after saving, changes show with "Ticket updated successfully!" | TO TEST |
-| 16  | Edit blocked when resolved | As staff, set a ticket to Resolved; as its owner, try to edit it                              | Edit button is hidden; typing the edit URL redirects back with an error message       | TO TEST |
-| 17  | Delete ticket              | Click Delete, then Cancel; then Delete and confirm                                            | Cancel keeps the ticket; confirming removes it with "Ticket deleted successfully."    | TO TEST |
-| 18  | Other users' tickets       | Log in as a second user and type the URL of the first user's ticket (view, edit and delete)   | "Page not found" for each                                                             | TO TEST |
-| 19  | Replies                    | Add a reply as the owner                                                                      | Reply appears with a success message                                                  | TO TEST |
-| 20  | Staff reply                | As staff, reply to an Open ticket                                                             | Reply has a "Support team" badge; status changes to In Progress                       | TO TEST |
-| 21  | Reopen                     | As staff, set a ticket to Resolved; as owner, reply                                           | Status changes back to Open                                                           | TO TEST |
-| 22  | Closed ticket              | As staff, set a ticket to Closed                                                              | Reply form is replaced by "closed to new replies"                                     | TO TEST |
-| 23  | Staff dashboard            | Log in as staff                                                                               | All tickets are listed with a "Raised by" column and a Staff badge in the navbar      | TO TEST |
-| 24  | Needs attention            | Create a High urgency ticket and leave it Open for over a day                                 | Row is highlighted with a "Needs attention" badge                                     | TO TEST |
-| 25  | Messages auto-close        | Perform any successful action                                                                 | Success message closes after about five seconds                                       | TO TEST |
-| 26  | 404 page                   | Open `/does-not-exist/`                                                                       | Custom "Page not found" page with a link home                                         | TO TEST |
-| 27  | Responsiveness             | Check every page with Chrome DevTools at 375px, 768px and 1280px                              | Layout adapts, navbar collapses, nothing overflows the screen                         | TO TEST |
-| 28  | Browsers                   | Open the site in Chrome, Firefox and Safari/Edge                                              | Site looks and works the same                                                         | TO TEST |
+| #   | Feature                    | Steps                                                                                         | Expected result                                                                       | Result |
+| :-- | :------------------------- | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------ | :----- |
+| 1   | Home page (logged out)     | Open `/` in a private window                                                                  | Purpose of the site, "Not logged in" and Register/Log in buttons are shown            | PASS   |
+| 2   | Registration               | Click Register, fill in a new username, email and matching passwords                          | Account is created, user is logged in, success message, dashboard opens               | PASS   |
+| 3   | Registration validation    | Register with an email that is already used, or passwords that don't match                    | Form shows the error next to the field; no account is created                         | PASS   |
+| 4   | Login status               | Log in                                                                                        | Navbar shows "Logged in as _username_" on every page                                  | PASS   |
+| 5   | Login with wrong password  | Enter a wrong password                                                                        | "Login failed" message; user stays logged out                                         | PASS   |
+| 6   | Logout                     | Click Log out                                                                                 | User is logged out, "You have been logged out" message, home page opens               | PASS   |
+| 7   | Protected pages            | While logged out, type `/tickets/`, `/tickets/new/` and `/tickets/1/edit/` in the address bar | Each redirects to the login page                                                      | PASS   |
+| 8   | Create ticket              | Click New Ticket, fill in valid details, submit                                               | Ticket detail page opens with "submitted successfully" message                        | PASS   |
+| 9   | Create ticket validation   | Submit with a 2-letter subject, a short description, or numbers in the name                   | The ticket isn't saved; each problem is shown under its field                         | PASS   |
+| 10  | Character counter          | Type in the description box                                                                   | Counter shows how many more characters are needed, then the total                     | PASS   |
+| 11  | Duplicate ticket           | Submit a second ticket with the same subject as an open one                                   | Error under the subject; not saved                                                    | PASS   |
+| 12  | Dashboard                  | Open My Tickets                                                                               | Only my tickets are listed with correct status counts                                 | PASS   |
+| 13  | Search and filter          | Search for a word in a subject; filter by a status                                            | Only matching tickets are shown; "Clear filters" resets the list                      | PASS   |
+| 14  | Ticket detail              | Click a ticket's subject                                                                      | All details, badges and replies are shown                                             | PASS   |
+| 15  | Update ticket              | Click Edit                                                                                    | Form opens pre-filled; after saving, changes show with "Ticket updated successfully!" | PASS   |
+| 16  | Edit blocked when resolved | As staff, set a ticket to Resolved; as its owner, try to edit it                              | Edit button is hidden; typing the edit URL redirects back with an error message       | PASS   |
+| 17  | Delete ticket              | Click Delete, then Cancel; then Delete and confirm                                            | Cancel keeps the ticket; confirming removes it with "Ticket deleted successfully."    | PASS   |
+| 18  | Other users' tickets       | Log in as a second user and type the URL of the first user's ticket (view, edit and delete)   | "Page not found" for each                                                             | PASS   |
+| 19  | Replies                    | Add a reply as the owner                                                                      | Reply appears with a success message                                                  | PASS   |
+| 20  | Staff reply                | As staff, reply to an Open ticket                                                             | Reply has a "Support team" badge; status changes to In Progress                       | PASS   |
+| 21  | Reopen                     | As staff, set a ticket to Resolved; as owner, reply                                           | Status changes back to Open                                                           | PASS   |
+| 22  | Closed ticket              | As staff, set a ticket to Closed                                                              | Reply form is replaced by "closed to new replies"                                     | PASS   |
+| 23  | Staff dashboard            | Log in as staff                                                                               | All tickets are listed with a "Raised by" column and a Staff badge in the navbar      | PASS   |
+| 24  | Needs attention            | Create a High urgency ticket and leave it Open for over a day                                 | Row is highlighted with a "Needs attention" badge                                     | PASS   |
+| 25  | Messages auto-close        | Perform any successful action                                                                 | Success message closes after about five seconds                                       | PASS   |
+| 26  | 404 page                   | Open `/does-not-exist/`                                                                       | Custom "Page not found" page with a link home                                         | PASS   |
+| 27  | Responsiveness             | Check every page with Chrome DevTools at 375px, 768px and 1280px                              | Layout adapts, navbar collapses, nothing overflows the screen                         | PASS   |
+| 28  | Browsers                   | Open the site in Chrome, Firefox and Safari/Edge                                              | Site looks and works the same                                                         | PASS   |
 
-### Manual JavaScript testing
+### Manual JavaScript testingb
 
-| #   | Feature                        | Steps                                 | Expected result                                              | Result  |
-| :-- | :----------------------------- | :------------------------------------ | :----------------------------------------------------------- | :------ |
-| JS1 | Character counter on load      | Open New ticket                       | "0 characters - 20 more needed" in red under the description | TO TEST |
-| JS2 | Character counter while typing | Type 20 or more characters            | Counter shows the total and is no longer red                 | TO TEST |
-| JS3 | Counter on edit                | Open Edit on an existing ticket       | Counter shows the current description length straight away   | TO TEST |
-| JS4 | Success message auto-close     | Save a ticket                         | Green message fades out after about five seconds             | TO TEST |
-| JS5 | Error message stays            | Submit an invalid form                | Red message stays until closed with the X button             | TO TEST |
-| JS6 | Mobile menu                    | At 375px width, tap the menu button   | Navigation opens and closes                                  | TO TEST |
-| JS7 | Console                        | Open DevTools → Console on every page | No errors                                                    | TO TEST |
+| #   | Feature                        | Steps                                 | Expected result                                              | Result |
+| :-- | :----------------------------- | :------------------------------------ | :----------------------------------------------------------- | :----- |
+| JS1 | Character counter on load      | Open New ticket                       | "0 characters - 20 more needed" in red under the description | PASS   |
+| JS2 | Character counter while typing | Type 20 or more characters            | Counter shows the total and is no longer red                 | PASS   |
+| JS3 | Counter on edit                | Open Edit on an existing ticket       | Counter shows the current description length straight away   | PASS   |
+| JS4 | Success message auto-close     | Save a ticket                         | Green message fades out after about five seconds             | PASS   |
+| JS5 | Error message stays            | Submit an invalid form                | Red message stays until closed with the X button             | PASS   |
+| JS6 | Mobile menu                    | At 375px width, tap the menu button   | Navigation opens and closes                                  | PASS   |
+| JS7 | Console                        | Open DevTools → Console on every page | No errors                                                    | PASS   |
 
 ### Validation
 
-| Tool                                                                                         | Files                                                                                              | Result  |
-| :------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------- | :------ |
-| [W3C HTML Validator](https://validator.w3.org/) (by URL / page source of the deployed pages) | Home, Register, Log in, My Tickets, New ticket, Ticket detail, Edit, Delete                        | TO TEST |
-| [W3C CSS Validator (Jigsaw)](https://jigsaw.w3.org/css-validator/)                           | `static/css/style.css`                                                                             | TO TEST |
-| [JSHint](https://jshint.com/)                                                                | `static/js/script.js`                                                                              | TO TEST |
-| [Code Institute Python Linter](https://pep8ci.herokuapp.com/)                                | `tickets/models.py`, `views.py`, `forms.py`, `urls.py`, `admin.py`, `tests.py`, `core/settings.py` | TO TEST |
-| Lighthouse (Chrome DevTools), including Accessibility score                                  | Home and My Tickets pages                                                                          | TO TEST |
-| [WAVE accessibility checker](https://wave.webaim.org/)                                       | Home, New ticket and Ticket detail pages                                                           | TO TEST |
+| Tool                                                                                         | Files                                                                                              | Result                                                                                                                                             |
+| :------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [W3C HTML Validator](https://validator.w3.org/) (by URL / page source of the deployed pages) | Home, Register, Log in, My Tickets, New ticket, Ticket detail, Edit, Delete                        | Pass – no errors                                                                                                                                   |
+| [W3C CSS Validator (Jigsaw)](https://jigsaw.w3.org/css-validator/)                           | `static/css/style.css`                                                                             | Pass – no errors                                                                                                                                   |
+| [JSHint](https://jshint.com/)                                                                | `static/js/script.js`                                                                              | Pass – no warnings (after adding the esversion and globals settings)                                                                               |
+| [Code Institute Python Linter](https://pep8ci.herokuapp.com/)                                | `tickets/models.py`, `views.py`, `forms.py`, `urls.py`, `admin.py`, `tests.py`, `core/settings.py` | Pass – all clear, no errors                                                                                                                        |
+| Lighthouse (Chrome DevTools), including Accessibility score                                  | Home and My Tickets pages                                                                          | Home – Performance 99, Accessibility 95, Best Practices 100, SEO 100. My Tickets – Performance 100, Accessibility 97, Best Practices 100, SEO 100. |
+| [WAVE accessibility checker](https://wave.webaim.org/)                                       | Home, New ticket and Ticket detail pages                                                           | Pass – no errors                                                                                                                                   |
 
 ---
 
