@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 import environ
 import dj_database_url
@@ -148,6 +149,12 @@ STORAGES = {
         ),
     },
 }
+
+# Tests run without collectstatic, so use the plain storage there
+if 'test' in sys.argv:
+    STORAGES['staticfiles']['BACKEND'] = (
+        'django.contrib.staticfiles.storage.StaticFilesStorage'
+    )
 
 # Authentication routing: regular users log in through the site's own
 # pages, never through the Django admin.

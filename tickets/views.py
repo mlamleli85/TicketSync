@@ -227,8 +227,10 @@ def ticket_update_view(request, pk):
         )
         return redirect('ticket_detail', pk=ticket.pk)
 
-    form_class = StaffTicketForm if request.user.is_staff \
-        else SupportTicketForm
+    if request.user.is_staff:
+        form_class = StaffTicketForm
+    else:
+        form_class = SupportTicketForm
 
     if request.method == 'POST':
         form = form_class(request.POST, instance=ticket, user=ticket.user)
