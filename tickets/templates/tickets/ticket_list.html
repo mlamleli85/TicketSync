@@ -1,117 +1,104 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TicketSync | Support Tickets Dashboard</title>
-    <!-- Bootstrap 5 CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap Icons for refined visual details -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-    />
-  </head>
-  <body class="bg-light py-5">
-    <div class="container">
-      <!-- Messages Section -->
-      {% if messages %}
-        {% for message in messages %}
-          <div
-            class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm"
-            role="alert"
-          >
-            {{ message }}
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
-          </div>
+{% extends 'base.html' %}
+
+{% block title %}My Tickets{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div>
+    <h1 class="h3 fw-bold mb-0">{% if user.is_staff %}All support tickets{% else %}My support tickets{% endif %}</h1>
+    <p class="text-muted small mb-0">
+      {% if user.is_staff %}You are staff, so you can see and manage every ticket.{% else %}Only you and the support team can see these tickets.{% endif %}
+    </p>
+  </div>
+  <a href="{% url 'ticket_submit' %}" class="btn btn-brand">
+    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>New ticket
+  </a>
+</div>
+
+<div class="row g-2 mb-4 text-center">
+  <div class="col-6 col-md"><div class="stat p-2 bg-white border rounded-3"><div class="fs-4 fw-bold">{{ counts.total }}</div><div class="small text-muted">Total</div></div></div>
+  <div class="col-6 col-md"><div class="stat p-2 bg-white border rounded-3"><div class="fs-4 fw-bold">{{ counts.open }}</div><div class="small text-muted">Open</div></div></div>
+  <div class="col-4 col-md"><div class="stat p-2 bg-white border rounded-3"><div class="fs-4 fw-bold">{{ counts.in_progress }}</div><div class="small text-muted">In progress</div></div></div>
+  <div class="col-4 col-md"><div class="stat p-2 bg-white border rounded-3"><div class="fs-4 fw-bold">{{ counts.resolved }}</div><div class="small text-muted">Resolved</div></div></div>
+  <div class="col-4 col-md"><div class="stat p-2 bg-white border rounded-3"><div class="fs-4 fw-bold">{{ counts.closed }}</div><div class="small text-muted">Closed</div></div></div>
+</div>
+
+<form method="get" class="row g-2 mb-3" role="search">
+  <div class="col-md-6">
+    <label for="search" class="visually-hidden">Search tickets</label>
+    <input type="search" id="search" name="q" value="{{ search_query }}" class="form-control" placeholder="Search subject or message">
+  </div>
+  <div class="col-8 col-md-4">
+    <label for="status" class="visually-hidden">Filter by status</label>
+    <select id="status" name="status" class="form-select">
+      <option value="">All statuses</option>
+      {% for value, label in status_choices %}
+      <option value="{{ value }}" {% if value == status_filter %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-4 col-md-2 d-grid">
+    <button type="submit" class="btn btn-outline-dark">Filter</button>
+  </div>
+</form>
+
+{% if search_query or status_filter %}
+<p class="small text-muted">
+  Showing {{ tickets|length }} matching ticket{{ tickets|length|pluralize }}.
+  <a href="{% url 'ticket_list' %}">Clear filters</a>
+</p>
+{% endif %}
+
+<div class="card shadow-sm border-0 overflow-hidden">
+  {% if tickets %}
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th scope="col" class="ps-3">Subject</th>
+          <th scope="col">Urgency</th>
+          <th scope="col">Status</th>
+          {% if user.is_staff %}<th scope="col">Raised by</th>{% endif %}
+          <th scope="col">Submitted</th>
+          <th scope="col" class="pe-3 text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets %}
+        <tr {% if ticket.needs_attention %}class="needs-attention"{% endif %}>
+          <td class="ps-3 fw-semibold">
+            <a href="{% url 'ticket_detail' ticket.pk %}" class="text-decoration-none">{{ ticket.issue_subject }}</a>
+            {% if ticket.needs_attention %}
+            <span class="badge text-bg-warning ms-1" title="Urgent and still open after a day">Needs attention</span>
+            {% endif %}
+          </td>
+          <td>{% include 'tickets/includes/urgency_badge.html' %}</td>
+          <td>{% include 'tickets/includes/status_badge.html' %}</td>
+          {% if user.is_staff %}<td class="small">{{ ticket.user.username|default:ticket.full_name }}</td>{% endif %}
+          <td class="text-muted small">{{ ticket.submitted_on|date:"M d, Y" }}</td>
+          <td class="pe-3 text-end text-nowrap">
+            <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-outline-secondary btn-sm" aria-label="View {{ ticket.issue_subject }}">
+              <i class="bi bi-eye" aria-hidden="true"></i><span class="d-none d-lg-inline ms-1">View</span>
+            </a>
+            <a href="{% url 'ticket_delete' ticket.pk %}" class="btn btn-outline-danger btn-sm" aria-label="Delete {{ ticket.issue_subject }}">
+              <i class="bi bi-trash" aria-hidden="true"></i><span class="d-none d-lg-inline ms-1">Delete</span>
+            </a>
+          </td>
+        </tr>
         {% endfor %}
-      {% endif %}
-
-      <!-- Header Section -->
-      <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
-        <div>
-          <h1 class="h2 fw-bold text-primary mb-1">TicketSync</h1>
-          <p class="text-muted mb-0 small">Support Tickets Dashboard</p>
-        </div>
-        <a href="{% url 'ticket_submit' %}" class="btn btn-primary shadow-sm px-3 fw-semibold">
-          <i class="bi bi-plus-lg me-1"></i> New Support Ticket
-        </a>
-      </div>
-
-      <!-- Dashboard Table Card -->
-      <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
-        <div class="card-body p-0">
-          {% if tickets %}
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-dark bg-dark">
-                <tr>
-                  <th class="py-3 ps-4">Subject</th>
-                  <th class="py-3">Urgency</th>
-                  <th class="py-3">Status</th>
-                  <th class="py-3">Created</th>
-                  <th class="py-3 pe-4 text-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for ticket in tickets %}
-                <tr>
-                  <td class="ps-4 fw-semibold">
-                    <a
-                      href="{% url 'ticket_detail' ticket.pk %}"
-                      class="text-decoration-none text-dark hover-primary"
-                    >
-                      {{ ticket.issue_subject }}
-                    </a>
-                  </td>
-                  <td>
-                    <span class="badge bg-secondary text-uppercase px-2 py-1 fs-7">
-                      {{ ticket.urgency_level }}
-                    </span>
-                  </td>
-                  <td>
-                    <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle px-2 py-1">
-                      {{ ticket.status|default:"Open" }}
-                    </span>
-                  </td>
-                  <td class="text-muted small">
-                    {{ ticket.submitted_on|date:"M d, Y" }}
-                  </td>
-                  <td class="pe-4 text-end">
-                    <a
-                      href="{% url 'ticket_delete' ticket.pk %}"
-                      class="btn btn-outline-danger btn-sm px-3"
-                    >
-                      <i class="bi bi-trash me-1"></i> Delete
-                    </a>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          {% else %}
-          <div class="p-5 text-center text-muted">
-            <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary opacity-50"></i>
-            <p class="mb-0">
-              No tickets found. Need help? Click
-              <strong class="text-primary">+ New Support Ticket</strong> to submit one!
-            </p>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="p-5 text-center text-muted">
+    <i class="bi bi-inbox fs-1 d-block mb-2 opacity-50" aria-hidden="true"></i>
+    {% if search_query or status_filter %}
+    <p class="mb-0">No tickets match your search. <a href="{% url 'ticket_list' %}">Clear filters</a></p>
+    {% else %}
+    <p class="mb-2">You haven't submitted any tickets yet.</p>
+    <a href="{% url 'ticket_submit' %}" class="btn btn-brand btn-sm">Submit your first ticket</a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

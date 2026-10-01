@@ -1,0 +1,97 @@
+/* TicketSync custom styles (layered on top of Bootstrap 5) */
+
+:root {
+  --brand: #1f4e5f;
+  --brand-dark: #163a47;
+  --brand-tint: #e6f0f2;
+  --accent: #f2a541;
+  --page-bg: #f5f7f8;
+}
+
+body {
+  background-color: var(--page-bg);
+}
+
+/* Brand colour for the navbar and main buttons */
+.bg-brand {
+  background-color: var(--brand);
+}
+
+.btn-brand {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--brand-dark);
+  --bs-btn-hover-border-color: var(--brand-dark);
+  --bs-btn-active-bg: var(--brand-dark);
+  --bs-btn-active-border-color: var(--brand-dark);
+  --bs-btn-focus-shadow-rgb: 31, 78, 95;
+}
+
+/* Home page */
+.hero {
+  background: linear-gradient(135deg, var(--brand-tint) 0%, #ffffff 100%);
+  border: 1px solid #d7e4e8;
+}
+
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  font-weight: 500;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Ticket status badges: one colour per lifecycle stage */
+.status-badge {
+  font-weight: 600;
+}
+
+.status-open {
+  background-color: #0d6efd;
+}
+
+.status-in_progress {
+  background-color: #6f42c1;
+}
+
+.status-resolved {
+  background-color: #198754;
+}
+
+.status-closed {
+  background-color: #6c757d;
+}
+
+/* Urgent tickets left open are highlighted on the dashboard */
+.needs-attention > td:first-child {
+  box-shadow: inset 4px 0 0 var(--accent);
+}
+
+/* Keep line breaks the user typed in messages and replies */
+.ticket-message {
+  white-space: pre-line;
+}
+
+/* Replies from staff stand out from the user's own replies */
+.comment-staff {
+  background-color: #fff8ec;
+}
+
+.stat {
+  height: 100%;
+}

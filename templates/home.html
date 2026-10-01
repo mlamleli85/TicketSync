@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero rounded-4 p-4 p-md-5 mb-4">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <h1 class="display-6 fw-bold mb-3">Get help fast, and always know where your request stands.</h1>
+      <p class="lead mb-4">
+        TicketSync is a support portal. Describe your problem once, then follow it
+        from <strong>Open</strong> to <strong>Resolved</strong> and talk to the support team
+        on the same page.
+      </p>
+      {% if user.is_authenticated %}
+      <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'ticket_submit' %}" class="btn btn-brand btn-lg">
+          <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>New ticket
+        </a>
+        <a href="{% url 'ticket_list' %}" class="btn btn-outline-dark btn-lg">View my tickets</a>
+      </div>
+      {% else %}
+      <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'signup' %}" class="btn btn-brand btn-lg">Create a free account</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-dark btn-lg">Log in</a>
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-lg-5">
+      {% if summary %}
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h2 class="h6 text-uppercase text-muted mb-3">
+            {% if user.is_staff %}All tickets{% else %}Your tickets{% endif %}
+          </h2>
+          <div class="row text-center g-2">
+            <div class="col-4">
+              <div class="fs-3 fw-bold">{{ summary.total }}</div>
+              <div class="small text-muted">Total</div>
+            </div>
+            <div class="col-4">
+              <div class="fs-3 fw-bold text-primary">{{ summary.active }}</div>
+              <div class="small text-muted">Active</div>
+            </div>
+            <div class="col-4">
+              <div class="fs-3 fw-bold text-success">{{ summary.resolved }}</div>
+              <div class="small text-muted">Resolved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <ol class="list-unstyled steps mb-0">
+        <li><span class="step-number">1</span> Register or log in</li>
+        <li><span class="step-number">2</span> Submit a ticket describing the issue</li>
+        <li><span class="step-number">3</span> Follow its status and reply to the support team</li>
+      </ol>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="row g-3" aria-label="Features">
+  <div class="col-md-4">
+    <div class="feature h-100 p-3 bg-white rounded-3 border">
+      <h2 class="h6 fw-bold"><i class="bi bi-ui-checks me-1" aria-hidden="true"></i>Clear status</h2>
+      <p class="small text-muted mb-0">Every ticket shows whether it is Open, In Progress, Resolved or Closed.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="feature h-100 p-3 bg-white rounded-3 border">
+      <h2 class="h6 fw-bold"><i class="bi bi-chat-dots me-1" aria-hidden="true"></i>One conversation</h2>
+      <p class="small text-muted mb-0">Replies stay attached to the ticket, so nothing gets lost in email.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="feature h-100 p-3 bg-white rounded-3 border">
+      <h2 class="h6 fw-bold"><i class="bi bi-shield-lock me-1" aria-hidden="true"></i>Private by default</h2>
+      <p class="small text-muted mb-0">You only see your own tickets. Only support staff can see all of them.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

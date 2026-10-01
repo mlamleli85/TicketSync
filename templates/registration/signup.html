@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h1 class="h3 mb-1">Create your account</h1>
+        <p class="text-muted small mb-4">An account keeps your tickets private and lets you follow their progress.</p>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% include 'tickets/includes/form_fields.html' %}
+          <button type="submit" class="btn btn-brand w-100">Register</button>
+        </form>
+        <p class="small text-center mt-3 mb-0">
+          Already registered? <a href="{% url 'login' %}">Log in</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
