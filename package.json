@@ -1,0 +1,15 @@
+{
+  "name": "ticketsync",
+  "private": true,
+  "description": "Front-end test tooling for TicketSync (not used in production)",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testMatch": ["<rootDir>/js_tests/**/*.test.js"]
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
