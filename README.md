@@ -70,6 +70,15 @@ Every page shares one base template (`templates/base.html`) with a responsive na
 
 Breadcrumbs on the ticket pages show where the user is and link back to the dashboard.
 
+### Accessibility
+
+- A "Skip to main content" link appears when keyboard users press Tab.
+- Semantic HTML (`header`, `nav`, `main`, `footer`, `article`, `section`) and one `h1` per page.
+- Every form field has a visible label; errors are shown as text under the field, not only by colour.
+- Icons are hidden from screen readers (`aria-hidden`), and icon-only buttons have an `aria-label`.
+- The active navigation link uses `aria-current="page"`, and messages are announced with `aria-live`.
+- Text and badge colours were chosen for strong contrast against their backgrounds.
+
 ### Visual design
 
 - **Colours:** a deep teal brand colour (`#1f4e5f`) for the navigation bar and main buttons gives a calm, professional feel suited to a support tool. An amber accent (`#f2a541`) marks urgent tickets that need attention. Each ticket status has its own badge colour: blue for Open, purple for In Progress, green for Resolved and grey for Closed. Users can read a ticket's state at a glance.
@@ -85,6 +94,8 @@ The project was planned and tracked with the **[TicketSync GitHub Project board]
 
 - Every user story is a GitHub Issue that uses a user story template with **acceptance criteria** and **tasks**.
 - Each story is labelled with its **epic** and a **MoSCoW priority** (`must-have`, `should-have`, `could-have`).
+- Work was refined from **epics → user stories → tasks**. Each epic is its own issue listing its stories, and each story issue links back to its epic and lists the tasks needed to build it.
+- Each story has **story points** (relative effort). Of the 48 points in total, must-haves are 33 points (69%), should-haves 11 points (23%) and could-haves 4 points (8%), so should-have stories stay well under 60% of the total.
 - Stories are grouped into **milestones**, one per sprint:
 
 | Sprint (milestone) | Goal | Stories |
@@ -100,63 +111,63 @@ The project was planned and tracked with the **[TicketSync GitHub Project board]
 
 ### Epic 1: Project foundations
 
-**US01 (must-have):** As a **developer**, I can **set up a Django project deployed to Heroku** so that **the app is available online from the start**.
+**US01 (must-have, 5 points):** As a **developer**, I can **set up a Django project deployed to Heroku** so that **the app is available online from the start**.
 
 - Acceptance criteria: the app is deployed to Heroku; secrets are stored in environment variables, not in the repository; `DEBUG` is off in production.
 
-**US02 (must-have):** As a **site admin**, I can **manage tickets in the Django admin panel** so that **I can fix data problems quickly**.
+**US02 (must-have, 2 points):** As a **site admin**, I can **manage tickets in the Django admin panel** so that **I can fix data problems quickly**.
 
 - Acceptance criteria: tickets and replies are listed, searchable and filterable by status and urgency; a ticket's status can be changed from the list.
 
 ### Epic 2: Ticket management (CRUD)
 
-**US03 (must-have):** As a **user**, I can **submit a support ticket** so that **I can get help with my issue**.
+**US03 (must-have, 5 points):** As a **user**, I can **submit a support ticket** so that **I can get help with my issue**.
 
 - Acceptance criteria: the form asks for name, email, subject, description and urgency; invalid input shows an error next to the field; the new ticket is linked to my account.
 
-**US04 (must-have):** As a **user**, I can **see a list of my tickets** so that **I know what I have raised**.
+**US04 (must-have, 3 points):** As a **user**, I can **see a list of my tickets** so that **I know what I have raised**.
 
 - Acceptance criteria: the dashboard lists only my tickets, newest first, with urgency, status and date.
 
-**US05 (must-have):** As a **user**, I can **open a ticket to see its full details** so that **I can check what I reported and its status**.
+**US05 (must-have, 2 points):** As a **user**, I can **open a ticket to see its full details** so that **I can check what I reported and its status**.
 
-**US06 (must-have):** As a **user**, I can **edit my ticket** so that **I can correct or add information**.
+**US06 (must-have, 3 points):** As a **user**, I can **edit my ticket** so that **I can correct or add information**.
 
 - Acceptance criteria: the edit form opens pre-filled with the current values; changes are saved and confirmed with a message; resolved or closed tickets can no longer be edited.
 
-**US07 (must-have):** As a **user**, I can **delete my ticket** so that **I can remove a request I no longer need**.
+**US07 (must-have, 2 points):** As a **user**, I can **delete my ticket** so that **I can remove a request I no longer need**.
 
 - Acceptance criteria: I am asked to confirm before anything is deleted; a message confirms the deletion.
 
 ### Epic 3: Accounts and permissions
 
-**US08 (must-have):** As a **visitor**, I can **register an account** so that **my tickets are private to me**.
+**US08 (must-have, 3 points):** As a **visitor**, I can **register an account** so that **my tickets are private to me**.
 
 - Acceptance criteria: registration asks for a username, email and password; an email address can only be used once; I am logged in straight after registering.
 
-**US09 (must-have):** As a **user**, I can **log in and log out** so that **my account is secure**.
+**US09 (must-have, 3 points):** As a **user**, I can **log in and log out** so that **my account is secure**.
 
-**US10 (must-have):** As a **user**, I can **see whether I am logged in** so that **I know which account I am using**.
+**US10 (must-have, 2 points):** As a **user**, I can **see whether I am logged in** so that **I know which account I am using**.
 
 - Acceptance criteria: the navigation bar shows "Logged in as *username*" or "Not logged in" on every page.
 
-**US11 (must-have):** As a **user**, I can **only see and change my own tickets** so that **my information stays private**.
+**US11 (must-have, 3 points):** As a **user**, I can **only see and change my own tickets** so that **my information stays private**.
 
 - Acceptance criteria: logged-out visitors are sent to the login page; opening another user's ticket by typing its URL shows a "not found" page.
 
 ### Epic 4: Collaboration and workflow
 
-**US12 (should-have):** As a **support staff member**, I can **see all tickets and change their status** so that **I can manage the support queue**.
+**US12 (should-have, 3 points):** As a **support staff member**, I can **see all tickets and change their status** so that **I can manage the support queue**.
 
-**US13 (should-have):** As a **user or staff member**, I can **reply on a ticket** so that **we can discuss the issue in one place**.
+**US13 (should-have, 5 points):** As a **user or staff member**, I can **reply on a ticket** so that **we can discuss the issue in one place**.
 
 - Acceptance criteria: replies appear in order under the ticket; a staff reply moves an Open ticket to In Progress; a user reply reopens a Resolved ticket; closed tickets accept no replies.
 
-**US14 (should-have):** As a **user**, I can **search and filter my tickets by status** so that **I can find a ticket quickly**.
+**US14 (should-have, 3 points):** As a **user**, I can **search and filter my tickets by status** so that **I can find a ticket quickly**.
 
-**US15 (could-have):** As a **support staff member**, I can **spot urgent tickets that have been open for over a day** so that **nothing urgent is forgotten**.
+**US15 (could-have, 2 points):** As a **support staff member**, I can **spot urgent tickets that have been open for over a day** so that **nothing urgent is forgotten**.
 
-**US16 (could-have):** As a **user**, I can **see how many more characters my description needs** so that **I fill in the form correctly the first time**.
+**US16 (could-have, 2 points):** As a **user**, I can **see how many more characters my description needs** so that **I fill in the form correctly the first time**.
 
 ---
 
@@ -309,13 +320,34 @@ Automated tests are written with Django's `TestCase` in `tickets/tests.py`. They
 | CRUD views | Create (and pre-filled form), list filtered per user, staff sees all, search and status filter, detail access control, pre-filled update form, update, staff status change, blocked edit of resolved tickets, delete confirmation and delete, blocked access to other users' tickets |
 | Replies | Owner reply, staff reply changes status, no replies on closed tickets, empty reply rejected |
 
-To run the tests locally:
+To run the Python tests locally:
 
 ```bash
 python manage.py test
 ```
 
 Result: **TO TEST** (record the number of tests and "OK" here after running them).
+
+### Automated JavaScript tests
+
+The JavaScript in `static/js/script.js` is tested with [Jest](https://jestjs.io/) and jsdom in `js_tests/script.test.js`. The functions take the page (and, for alerts, the close function) as arguments so they can be tested without a browser.
+
+| Function | What is tested |
+| :--- | :--- |
+| `getCounterState` | Characters still needed, spaces ignored, message once the minimum is reached, empty input |
+| `setUpCharacterCounter` | Counter shows on page load in red, updates while typing and turns back to normal, does nothing on pages without a description box |
+| `autoDismissSuccessAlerts` | Success and info messages close after five seconds; error messages are never closed |
+
+To run the JavaScript tests (requires Node.js):
+
+```bash
+npm install
+npm test
+```
+
+Result: **TO TEST** (record the number of tests passed here after running them).
+
+`package.json` is only used for these tests. Jest is a development dependency and is not part of the deployed app.
 
 ### Manual testing
 
@@ -352,6 +384,18 @@ Each test below was carried out on the deployed site.
 | 27 | Responsiveness | Check every page with Chrome DevTools at 375px, 768px and 1280px | Layout adapts, navbar collapses, nothing overflows the screen | TO TEST |
 | 28 | Browsers | Open the site in Chrome, Firefox and Safari/Edge | Site looks and works the same | TO TEST |
 
+### Manual JavaScript testing
+
+| # | Feature | Steps | Expected result | Result |
+| :- | :--- | :--- | :--- | :--- |
+| JS1 | Character counter on load | Open New ticket | "0 characters - 20 more needed" in red under the description | TO TEST |
+| JS2 | Character counter while typing | Type 20 or more characters | Counter shows the total and is no longer red | TO TEST |
+| JS3 | Counter on edit | Open Edit on an existing ticket | Counter shows the current description length straight away | TO TEST |
+| JS4 | Success message auto-close | Save a ticket | Green message fades out after about five seconds | TO TEST |
+| JS5 | Error message stays | Submit an invalid form | Red message stays until closed with the X button | TO TEST |
+| JS6 | Mobile menu | At 375px width, tap the menu button | Navigation opens and closes | TO TEST |
+| JS7 | Console | Open DevTools → Console on every page | No errors | TO TEST |
+
 ### Validation
 
 | Tool | Files | Result |
@@ -360,7 +404,8 @@ Each test below was carried out on the deployed site.
 | [W3C CSS Validator (Jigsaw)](https://jigsaw.w3.org/css-validator/) | `static/css/style.css` | TO TEST |
 | [JSHint](https://jshint.com/) | `static/js/script.js` | TO TEST |
 | [Code Institute Python Linter](https://pep8ci.herokuapp.com/) | `tickets/models.py`, `views.py`, `forms.py`, `urls.py`, `admin.py`, `tests.py`, `core/settings.py` | TO TEST |
-| Lighthouse (Chrome DevTools) | Home and My Tickets pages | TO TEST |
+| Lighthouse (Chrome DevTools), including Accessibility score | Home and My Tickets pages | TO TEST |
+| [WAVE accessibility checker](https://wave.webaim.org/) | Home, New ticket and Ticket detail pages | TO TEST |
 
 ---
 
@@ -450,6 +495,7 @@ No known bugs remain at the time of submission.
 - **Languages:** HTML5, CSS3, JavaScript, Python 3
 - **Framework:** Django 6
 - **Front end:** Bootstrap 5.3 and Bootstrap Icons (via jsDelivr CDN)
+- **Testing:** Django `TestCase` (Python) and Jest with jsdom (JavaScript)
 - **Database:** PostgreSQL (Heroku Postgres) in production, SQLite locally
 - **Packages:** `gunicorn` (web server), `whitenoise` (static files), `dj-database-url` (database configuration), `django-environ` (environment variables), `psycopg2-binary` (PostgreSQL driver)
 - **Tools:** Git and GitHub (version control and Project board), Heroku (hosting), VS Code
@@ -460,6 +506,7 @@ No known bugs remain at the time of submission.
 
 - [Django documentation](https://docs.djangoproject.com/) for authentication views, `login_required`, the messages framework and testing.
 - [Bootstrap 5 documentation](https://getbootstrap.com/docs/5.3/) for layout and components.
+- [Jest documentation](https://jestjs.io/docs/getting-started) for the JavaScript tests.
 - [WhiteNoise documentation](https://whitenoise.readthedocs.io/) for static file configuration.
 - Code Institute course material for the Heroku deployment process.
 - **AI assistance:** Claude (Anthropic) was used during the resubmission to review the assessor's feedback, suggest fixes for security, authentication, templates and validation, draft automated tests and help restructure this README. All code was reviewed, run and tested by the author.
